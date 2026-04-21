@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% comment %} DTL 1번 변수 출력 {{}} : 콧수염 괄호 {% endcomment %}
+    {% comment %} name 어디서 왔을까?? views.py에서 context의 key 값 {% endcomment %}
+    <h1>Hello, Bogeom</h1>
+
+    {% comment %} 
+    href 속성 = url 작성
+    get 방식이면 보통 a 태그
+    {% endcomment %}
+    <a href="{% url "articles:dinner" %}">dinner</a>
+    <a href="{% url "articles:search" %}">search</a>
+    <a href="{% url "articles:throw" %}">throw</a>
+    <a href="{% url "articles:detail" number %}">detail</a>
+
+{% endblock content %}

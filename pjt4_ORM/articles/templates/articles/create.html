@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% comment %} 
+a태그(get 요청) - form태그(post 요청)
+데이터를 같이 넘겨주려고 할때 : form 태그 
+{% endcomment %}
+
+{% comment %} enctype = "multipart/form-data" : 폼 데이터와 함께 파일도 서버에 전송 {% endcomment %}
+<form action="{% url "articles:create" %}" method="POST" enctype="multipart/form-data">
+  {% comment %} csrf 토큰 - 보안토큰(post 방식) {% endcomment %}
+  {% csrf_token %}
+
+  {% comment %} form.as_table, form.as_ul, form.as_div {% endcomment %}
+  {{form.as_p}}
+
+  <input type="submit">
+</form>
+
+{% endblock content %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% comment %} form 태그에서 action: 요청 보낼 url 주소 {% endcomment %}
+{% comment %} GET 방식은 조회나 검색, POST는 회원가입/로그인 {% endcomment %}
+{% comment %} 보안성이 있냐 없냐의 차이 {% endcomment %}
+<form action="https://search.naver.com/search.naver" method = "GET">
+
+  <label for="message">검색어를 입력하세요</label>
+
+  {% comment %} name이 중요!!! {% endcomment %}
+  <input type="text" name = "query">
+  <input type="submit" value="검색">
+
+</form>
+
+
+{% endblock content %}

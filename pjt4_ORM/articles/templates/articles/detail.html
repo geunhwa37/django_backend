@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% comment %} 수정 {% endcomment %}
+  <a href="{% url "articles:update" article.pk %}">EDIT</a>
+
+  <hr>
+
+  {% comment %} 삭제 {% endcomment %}
+  <form action="{% url "articles:delete" article.pk %}" method="POST">
+    {% csrf_token %}
+
+    <input type="submit" value="DELETE">
+  </form>
+  
+  <h2>Detail</h2>
+  <h3>{{article.pk}}</h3>
+
+  <hr>
+
+  {% comment %} 이미지가 있다면 {% endcomment %}
+  {% if article.image %}
+    <img src="{{article.image.url}}" alt="업로드한 이미지">  
+  {% endif %}
+
+  <hr>
+
+  <p>제목 : {{article.title}}</p>
+  <p>내용 : {{article.content}}</p>
+
+  <a href="{% url "articles:index" %}">HOME</a>
+
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+  <h1>박보검의 게시판</h1>
+
+  <img src="{% static "cat.webp" %}" alt="고양이">
+  
+  <hr>
+    <a href="{% url "articles:create" %}">글쓰기</a>
+  <hr>
+
+
+  {% comment %} DTL for문 {% endcomment %}
+  {% for article in articles %}
+    {% comment %} DTL 변수 (콧수염 괄호) {% endcomment %}
+    <p>글 id : {{article.pk}}</p>
+    <a href="{% url "articles:detail" article.pk %}">
+      <p>글 제목 : {{article.title}}</p>
+    </a>
+    
+    <hr>
+  {% endfor %}
+
+
+{% endblock content %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  {% comment %} app_name:name {% endcomment %}
+  <form action="{% url "articles:catch" %}" method="GET">
+    <input type="text" name="throw">
+    <input type="submit">
+  </form>
+{% endblock content %}
