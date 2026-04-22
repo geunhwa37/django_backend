@@ -3,13 +3,36 @@
 {% load static %}
 
 {% block content %}
-  <h1>박보검의 게시판</h1>
+  {% comment %} auth_login(request, form.get_user()) -> request로 부터 온 user {% endcomment %}
+  <h3>안녕하세요. {{user.username}}님</h3>
+
+  <h1>그나의 게시판</h1>
+
+  {% if request.user.is_authenticated %}
+
+    <form action="{% url "accounts:logout" %}" method=POST>
+    {% csrf_token %}
+    <input type="submit" value="logout">
+    </form>
+
+    <form action="{% url "accounts:delete" %}" method=POST>
+      {% csrf_token %}
+      <input type="submit" value="delete your account">
+    </form>
+
+    <hr>
+      <a href="{% url "articles:create" %}">글쓰기</a>
+    <hr>
+
+  {% else %}
+    <a href="{% url "accounts:signup" %}">signup</a>
+
+    <a href="{% url "accounts:login" %}">login</a>
+  {% endif %}
 
   <img src="{% static "cat.webp" %}" alt="고양이">
   
-  <hr>
-    <a href="{% url "articles:create" %}">글쓰기</a>
-  <hr>
+  
 
 
   {% comment %} DTL for문 {% endcomment %}
