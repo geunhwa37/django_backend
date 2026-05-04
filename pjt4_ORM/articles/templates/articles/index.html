@@ -11,9 +11,11 @@
   {% if request.user.is_authenticated %}
 
     <form action="{% url "accounts:logout" %}" method=POST>
-    {% csrf_token %}
-    <input type="submit" value="logout">
+      {% csrf_token %}
+      <input type="submit" value="logout">
     </form>
+
+    <a href="{% url "accounts:update" %}">update</a>
 
     <form action="{% url "accounts:delete" %}" method=POST>
       {% csrf_token %}
