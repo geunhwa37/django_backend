@@ -53,6 +53,16 @@
     <input type="submit" value="댓글 생성">
   </form>
 
+  <form action="{% url "articles:likes" article.pk %}" method="POST">
+    {% csrf_token %}
+    {% comment %} 이미 좋아요를 눌렀다면 {% endcomment %}
+    {% if request.user in article.like_users.all %}
+      <input type="submit" value="좋아요 취소">
+    {% else %}
+      <input type="submit" value="좋아요"> 
+    {% endif %}
+  </form>
+
   <a href="{% url "articles:index" %}">HOME</a>
 
 {% endblock content %}

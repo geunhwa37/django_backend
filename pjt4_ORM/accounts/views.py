@@ -8,6 +8,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import update_session_auth_hash
 from .models import User
+from django.contrib.auth import get_user_model
 
 from django.contrib.auth.decorators import login_required # 로그인 하지 않은 상태에서 url 접근하는 것을 방지
 
@@ -107,3 +108,35 @@ def change_password(request):
     }
 
     return render(request, 'accounts/change_password.html', context)
+
+@login_required
+def profile(request, username):
+    User = get_user_model() # 로그인한 사용자 모델이 아니고, db에 저장되어 있는 모든 사용자 모델
+
+    # person : 게시글 작성한 개인 사용자(반드시 로그인한 사용자일 필요는 없음)
+    person = User.objects.get(username=username)
+
+    context = {
+        'person' : person
+    }
+
+    return render(request, 'accounts/profile.html', context)
+
+@login_required
+def follow(request, user_pk):
+    User = get_user_model()
+    # person : 상대방
+    person = User.objects.get(pk=user_pk)
+
+    # 자기자신 팔로우 하는 것 방지
+    if person != request.user:
+        # filter.exists() : 데이터베이스에 존재하는지 확인
+        # 로그인한 사용자가 이미 팔로잉을 하고 있는 지 확인
+        if person.followers.filter(pk=request.user.pk).exists():
+            # 팔로우 취소
+            person.followers.remove(request.user)
+        else:
+            # 팔로잉
+            person.followers.add(request.user)
+
+    return redirect('accounts:profile', person.username)

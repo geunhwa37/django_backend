@@ -10,6 +10,10 @@
 
   {% if request.user.is_authenticated %}
 
+    <a href="{% url "accounts:profile" user.username %}">my profile</a>
+
+    <hr>
+
     <form action="{% url "accounts:logout" %}" method=POST>
       {% csrf_token %}
       <input type="submit" value="logout">
@@ -39,6 +43,11 @@
 
   {% comment %} DTL for문 {% endcomment %}
   {% for article in articles %}
+    {% comment %} article.user : 게시글을 작성한 user {% endcomment %}
+    <p>작성자 : <a href="{% url "accounts:profile" article.user %}">{{article.user}}</a>
+    
+    </p>
+
     {% comment %} DTL 변수 (콧수염 괄호) {% endcomment %}
     <p>글 id : {{article.pk}}</p>
     <a href="{% url "articles:detail" article.pk %}">
